@@ -68,6 +68,11 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 	</dependencies>
+	<!-- JWT dependencies -->
+
+
+
+
 
 	<build>
 		<plugins>
