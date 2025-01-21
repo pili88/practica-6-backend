@@ -1,16 +1,24 @@
 package com.universidad.universidad_backend.exception;
 
-
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+import java.io.Serial;
+
+@Getter
 public class CustomException extends RuntimeException {
-    public CustomException(String message) {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private final HttpStatus status;
+
+    public CustomException(String message, HttpStatus status) {
         super(message);
+        this.status = status;
     }
 
-    public CustomException(String message, Throwable cause) {
-        super(message, cause);
+    public CustomException(String message) {
+        this(message, HttpStatus.UNAUTHORIZED);
     }
+
 }

@@ -2,6 +2,7 @@ package com.universidad.universidad_backend.controller;
 
 import com.universidad.universidad_backend.dto.UserLoginDTO;
 import com.universidad.universidad_backend.model.User;
+import com.universidad.universidad_backend.service.AuthenticationService;
 import com.universidad.universidad_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody UserLoginDTO loginDto) {
-        return ResponseEntity.ok(userService.signin(loginDto.getUsername(), loginDto.getPassword()));
+        return ResponseEntity.ok(authenticationService.signin(loginDto.getUsername(), loginDto.getPassword()));
     }
 
     @PostMapping("/signup")

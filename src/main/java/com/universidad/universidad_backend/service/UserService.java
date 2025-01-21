@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -17,20 +18,9 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    public String signin(String username, String password) {
-        try {
-            User user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return jwtTokenProvider.createToken(username, user.getRoles());
-            }
-            throw new CustomException("Contraseña inválida");
-        } catch (Exception e) {
-            throw new CustomException("Usuario/contraseña inválidos");
-        }
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public User signup(User user) {
